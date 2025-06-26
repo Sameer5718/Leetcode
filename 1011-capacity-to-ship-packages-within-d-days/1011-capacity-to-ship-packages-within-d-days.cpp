@@ -25,7 +25,6 @@ int bsch(vector<int>&wt, int mid){
         }
         int lo = *max_element(wt.begin(),wt.end()); 
         int hi = prefix.back();
-        int m = INT_MAX;
         int ans = INT_MAX;
 
         while(lo<=hi){
