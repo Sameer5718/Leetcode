@@ -1,35 +1,31 @@
 class Solution {
 public:
-int bsch(vector<int>&wt, int mid){
-    int days = 1;
-    int load = 0;
-    for(int i = 0; i<wt.size(); i++){
-        if(load+wt[i]>mid){
-            days++;
-            load = 0;
-            load+=wt[i];
+bool isValid(vector<int>&arr, int mid, int days){
+    int n = arr.size();
+    int day = 1;
+    int wt = arr[0];
+    for(int i = 1; i<n ; i++){
+        if(wt+arr[i]<=mid){
+            wt+=arr[i];
         }
         else{
-            load+=wt[i];
+            day++;
+            wt=arr[i];
         }
     }
-    return days;
+    return day<=days;
 }
-    int shipWithinDays(vector<int>& wt, int days) {
-        
-        int n = wt.size();
-        vector<int>prefix(n,0);
-        prefix[0]=wt[0];
-        for(int i = 1; i<n; i++){
-            prefix[i] = (wt[i]+prefix[i-1]);
-        }
-        int lo = *max_element(wt.begin(),wt.end()); 
-        int hi = prefix.back();
+    int shipWithinDays(vector<int>& ship, int days) {
+        //sort(ship.begin(), ship.end());
+        auto f = ship.begin();
+        auto l = ship.end();
+        int hi = accumulate(f,l,0);
+        int n = ship.size();
+        int lo = *max_element(f,l);
         int ans = INT_MAX;
-
         while(lo<=hi){
             int mid = lo+(hi-lo)/2;
-            if(days>=bsch(wt,mid)){
+            if(isValid(ship, mid, days)){
                 ans = min(ans,mid);
                 hi = mid-1;
             }
