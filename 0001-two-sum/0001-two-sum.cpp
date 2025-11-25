@@ -1,19 +1,20 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // find karo target-ar[i] map me hai ki nahi
-        // agar nhi h to map me ar[i] -> idx daal do 
-        // aur agar h to {map[ar[i]], i} return kardo
-        map<int,int>m;
+        // find (uses iterator) is used when we want to retrieve or update the desired info in the map
+        // count is used only to check if that val exists or not, it returns bool
+        map<int, int>m;
         int n = nums.size();
         for(int i = 0; i<n; i++){
-            if(m.find(target-nums[i])!=m.end() && i != m[target - nums[i]]){
-                return {m[target - nums[i]], i};
+            auto it = m.find((target-nums[i]));
+                if(it!=m.end()){
+                    return {i,it->second};
+                }
+                else{
+                    m[nums[i]] = i;
+                }
             }
-            else{
-                m[nums[i]] = i;
-            }
+            return{-1,-1};
         }
-        return {0,0}; 
-    }
+    
 };
