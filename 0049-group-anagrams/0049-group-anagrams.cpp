@@ -1,35 +1,26 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        map<string,vector<string>>map;
+        string t,r,b;
         int n = strs.size();
-        vector<string>copy;
-        copy = strs;
-        // for(int i = 0; i<n; i++){
-        //     sort(copy[i].begin(), copy[i].end());
-        // }
-        vector<vector<string>>res;
-        vector<string>temp;
         for(int i = 0; i<n; i++){
-            if(copy[i].size()>0)
-                sort(copy[i].begin(), copy[i].end());
-            string t = copy[i];
-            if(t!="1" /* && t != "" */){
-                temp.push_back(strs[i]);
-                for(int j = i+1; j<n; j++){
-                    if(copy[j].size()>0)
-                        sort(copy[j].begin(), copy[j].end());
-                    string r = copy[j];
-                    if(r==t){
-                        temp.push_back(strs[j]);
-                        copy[j]="1";
-                    }
-                    else continue;
-                }
-                res.push_back(temp);
-                temp.clear();
+            t = strs[i];
+            sort(t.begin(), t.end());
+            auto it = map.find(t);
+            if(it==map.end()){
+                map[t].push_back(strs[i]);
             }
-            else
-                continue;
+            else{
+                map[t].push_back(strs[i]);
+            }
+        }
+
+        auto it = map.begin();
+        vector<vector<string>>res;
+        while(it!=map.end()){
+            res.push_back({it->second});
+            it++;
         }
         return res;
     }
