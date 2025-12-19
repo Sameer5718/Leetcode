@@ -19,7 +19,7 @@ public:
         auto it = map.begin();
         vector<vector<string>>res;
         while(it!=map.end()){
-            res.push_back({it->second});
+            res.push_back(it->second);
             it++;
         }
         return res;
